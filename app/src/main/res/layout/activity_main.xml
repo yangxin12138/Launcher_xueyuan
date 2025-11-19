@@ -130,27 +130,6 @@
             android:src="@drawable/icon_ketang_01"
             app:layout_constraintStart_toEndOf="@+id/im_youxue"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/sn_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/sn_number_marginTop"
-            android:text="SN:D202510231465"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sn_number_textSize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/im_youxue" />
-
-        <TextView
-            android:id="@+id/mac_number"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Mac:24:08:13:21:88"
-            android:textColor="@color/white"
-            android:textSize="@dimen/sn_number_textSize"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/sn_number" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

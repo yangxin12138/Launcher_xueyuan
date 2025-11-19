@@ -1,13 +1,13 @@
 package com.twd.launcherxueyuan.utils;
 
 import android.content.Context;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
-import android.os.Build;
 import android.text.format.DateFormat;
-import android.util.Log;
 
-import java.lang.reflect.Method;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Locale;
 
 public class Utils {
@@ -24,29 +24,26 @@ public class Utils {
         }
     }
 
-    public static String getSerialNumber() {
-        String serial = "";
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            // Android Q 及以上版本
-            Log.d("yangxin", "getSerialNumber: -----Android Q 以上");
-            serial = Build.getSerial();
-        } else {
-            // Android Q 之前
-            Log.d("yangxin", "getSerialNumber: -----Android Q 以下");
-            serial = Build.SERIAL;
+    public static String readSystemProp(String search_line) {
+        String line = "";
+        try {
+            File file = new File("/system/etc/settings.ini");
+            FileInputStream fis = new FileInputStream(file);
+            BufferedReader reader = new BufferedReader(new InputStreamReader(fis));
+            while ((line = reader.readLine()) != null) {
+                if (line.contains(search_line)) {
+                    // 这里可以进一步解析line来获取STORAGE_SIMPLE_SYSDATA的值
+                    String value = line.split("=")[1].trim(); // 获取等号后面的值
+                    reader.close();
+                    fis.close();
+                    return value;
+                }
+            }
+            reader.close();
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        return serial;
-    }
-
-    public static String getMac(Context context){
-        WifiManager wifiManager = (WifiManager) context.getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
-        String macAddress = wifiInfo.getMacAddress();
-        Log.d("yangxin", "getMac: macAddress = "+ macAddress);
-        if (macAddress != null){
-            macAddress = macAddress.toUpperCase();
-        }
-        return macAddress;
+        return "Standard";
     }
 }

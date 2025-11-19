@@ -1,10 +1,7 @@
 package com.twd.launcherxueyuan;
 
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -36,8 +33,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView top_setting;
     private ImageView icon_youxue;
     private ImageView icon_ketang;
-    private TextView SN_number;
-    private TextView Mac_number;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,16 +49,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         top_setting = findViewById(R.id.top_setting);
         icon_youxue = findViewById(R.id.im_youxue);
         icon_ketang = findViewById(R.id.im_ketang);
-        SN_number = findViewById(R.id.sn_number);
-        Mac_number = findViewById(R.id.mac_number);
 
         top_file.setOnFocusChangeListener(this::onFocusChange);top_file.setOnClickListener(this::onClick);
         top_setting.setOnFocusChangeListener(this::onFocusChange);top_setting.setOnClickListener(this::onClick);
         icon_youxue.setOnFocusChangeListener(this::onFocusChange);icon_youxue.setOnClickListener(this::onClick);
         icon_ketang.setOnFocusChangeListener(this::onFocusChange);icon_ketang.setOnClickListener(this::onClick);
-
-        SN_number.setText("SN:"+Utils.getSerialNumber());
-        Mac_number.setText("Mac:"+Utils.getMac(this));
     }
     private Runnable updateTimeRunnable = new Runnable() {
         @Override
@@ -119,17 +109,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Intent intent = null;
         if (view.getId() == R.id.top_file){//文件
             intent = new Intent();
-            intent.setComponent(new ComponentName("com.vsoontech.mos.filemanager", "com.vsoontech.filemanager.business.index.IndexAty"));
+            String file_package = Utils.readSystemProp("LAUNCHERFG_FILE_PACKAGE");
+            String file_className = Utils.readSystemProp("LAUNCHERFG_FILE_CLASS");
+            intent.setComponent(new ComponentName(file_package,file_className));
+            Log.d("yangxin", "onClick: file_package = "+file_package+",file_className = "+file_className);
         } else if (view.getId() == R.id.top_setting) {//设置
             intent = new Intent();
-            intent.setComponent(new ComponentName("com.twd.setting","com.twd.setting.MainActivity"));
+            String setting_package = Utils.readSystemProp("LAUNCHERFG_SETTING_PACKAGE");
+            String setting_className = Utils.readSystemProp("LAUNCHERFG_SETTING_CLASS");
+            intent.setComponent(new ComponentName(setting_package,setting_className));
+            Log.d("yangxin", "onClick: setting_package = "+setting_package+",setting_className = "+setting_className);
         } else if (view.getId() == R.id.im_youxue) {//游学app
             intent = getPackageManager().getLaunchIntentForPackage("uni.UNI7E6783A");
             if (intent != null) {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            } else {
-                // 应用未安装或无可用入口
-                Toast.makeText(this, "------------应用未安装或无法启动", Toast.LENGTH_SHORT).show();
             }
         } else if (view.getId() == R.id.im_ketang) { // 课堂
             intent = new Intent();
