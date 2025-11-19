@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.twd.launcherxueyuan.MainActivity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/topLayout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHeight_percent="0.08"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/main_marginTop"
+        android:paddingStart="@dimen/main_paddingStart"
+        android:paddingEnd="@dimen/main_paddingEnd">
+        <TextView
+            android:id="@+id/top_file"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="文件管理"
+            android:textSize="@dimen/file_textSize"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textColor="@color/text_color_selector"
+            android:gravity="bottom|center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.12"/>
+        <TextView
+            android:id="@+id/top_setting"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="系统设置"
+            android:textSize="@dimen/file_textSize"
+            android:textColor="@color/text_color_selector"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="bottom|center_horizontal"
+            app:layout_constraintStart_toEndOf="@id/top_file"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.12"/>
+        <View
+            android:id="@+id/time_bar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintStart_toEndOf="@id/top_setting"
+            app:layout_constraintEnd_toStartOf="@+id/tv_day"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.3"/>
+        <TextView
+            android:id="@+id/tv_day"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="2023/12/11\n周六"
+            android:textColor="@color/white"
+            android:textSize="@dimen/tv_day_textSize"
+            android:gravity="center_vertical|end"
+            android:paddingEnd="@dimen/tv_day_paddingEnd"
+            app:layout_constraintStart_toEndOf="@id/time_bar"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.18"
+            android:layout_marginEnd="@dimen/tv_day_marginEnd"/>
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="14:26"
+            android:textSize="@dimen/tv_time_textSize"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:fontFamily="@font/font04"
+            app:layout_constraintStart_toEndOf="@+id/tv_day"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/content_paddingStart"
+        android:paddingEnd="@dimen/content_paddingEnd"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topLayout"
+        app:layout_constraintVertical_bias="1.0">
+
+        <ImageView
+            android:id="@+id/im_youxue"
+            android:layout_width="@dimen/icon_wh"
+            android:layout_height="@dimen/icon_wh"
+            android:layout_marginStart="@dimen/icon_marginStart"
+            android:layout_marginTop="@dimen/icon_marginTop"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_youxue_1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/im_ketang"
+            android:layout_width="@dimen/icon_wh"
+            android:layout_height="@dimen/icon_wh"
+            android:layout_marginStart="@dimen/iconketang_marginStart"
+            android:layout_marginTop="@dimen/icon_marginTop"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/icon_ketang_01"
+            app:layout_constraintStart_toEndOf="@+id/im_youxue"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/sn_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/sn_number_marginTop"
+            android:text="SN:D202510231465"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sn_number_textSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/im_youxue" />
+
+        <TextView
+            android:id="@+id/mac_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mac:24:08:13:21:88"
+            android:textColor="@color/white"
+            android:textSize="@dimen/sn_number_textSize"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/sn_number" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

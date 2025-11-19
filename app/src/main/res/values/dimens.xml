@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="main_marginTop">50dp</dimen>
+    <dimen name="main_paddingStart">150dp</dimen>
+    <dimen name="main_paddingEnd">50dp</dimen>
+    <dimen name="file_textSize">25sp</dimen>
+    <dimen name="tv_day_textSize">20sp</dimen>
+    <dimen name="tv_day_paddingEnd">20dp</dimen>
+    <dimen name="tv_day_marginEnd">10dp</dimen>
+    <dimen name="tv_time_textSize">45sp</dimen>
+
+    <dimen name="content_paddingStart">130dp</dimen>
+    <dimen name="content_paddingEnd">100dp</dimen>
+    <dimen name="icon_wh">450dp</dimen>
+    <dimen name="icon_marginStart">20dp</dimen>
+    <dimen name="iconketang_marginStart">33dp</dimen>
+    <dimen name="icon_marginTop">30dp</dimen>
+
+    <dimen name="sn_number_textSize">23sp</dimen>
+    <dimen name="sn_number_marginTop">30dp</dimen>
+</resources>
