@@ -2,7 +2,6 @@ package com.twd.launcherxueyuan;
 
 import android.content.ComponentName;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.twd.launcherfuguan.R;
 import com.twd.launcherxueyuan.utils.Utils;
 
 import java.text.DateFormat;

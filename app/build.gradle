@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.twd.launcherfuguan'
+    namespace 'com.twd.launcherxueyuan'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.twd.launcherfuguan"
+        applicationId "com.twd.launcherxueyuan"
         minSdk 21
         targetSdk 34
         versionCode 1
