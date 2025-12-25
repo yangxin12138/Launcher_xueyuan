@@ -18,4 +18,18 @@
 
     <dimen name="sn_number_textSize">23sp</dimen>
     <dimen name="sn_number_marginTop">30dp</dimen>
+    <dimen name="application_title_textsize">50sp</dimen>
+    <dimen name="application_list_title_paddingStart">100dp</dimen>
+    <dimen name="application_title_padding">10dp</dimen>
+    <dimen name="application_grid_padding_startend">30dp</dimen>
+    <dimen name="application_paddingTop">30dp</dimen>
+    <dimen name="application_paddingBottom">30dp</dimen>
+    <dimen name="applicaiton_item_spacing">10dp</dimen>
+
+    <dimen name="application_icon_width">150dp</dimen>
+    <dimen name="application_item_radius">30dp</dimen>
+    <dimen name="application_icon_height">190dp</dimen>
+    <dimen name="application_icon_paddingTop">30dp</dimen>
+    <dimen name="application_image">120dp</dimen>
+    <dimen name="application_icon_textsize">20sp</dimen>
 </resources>

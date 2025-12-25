@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private TextView top_file;
     private TextView top_setting;
+    private TextView top_applications;
     private ImageView icon_youxue;
     private ImageView icon_ketang;
 
@@ -46,11 +47,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tv_time = findViewById(R.id.tv_time);
         top_file = findViewById(R.id.top_file);
         top_setting = findViewById(R.id.top_setting);
+        top_applications = findViewById(R.id.top_applications);
         icon_youxue = findViewById(R.id.im_youxue);
         icon_ketang = findViewById(R.id.im_ketang);
 
         top_file.setOnFocusChangeListener(this::onFocusChange);top_file.setOnClickListener(this::onClick);
         top_setting.setOnFocusChangeListener(this::onFocusChange);top_setting.setOnClickListener(this::onClick);
+        top_applications.setOnFocusChangeListener(this::onFocusChange);top_applications.setOnClickListener(this::onClick);
         icon_youxue.setOnFocusChangeListener(this::onFocusChange);icon_youxue.setOnClickListener(this::onClick);
         icon_ketang.setOnFocusChangeListener(this::onFocusChange);icon_ketang.setOnClickListener(this::onClick);
     }
@@ -118,6 +121,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             String file_className = Utils.readSystemProp("LAUNCHERFG_FILE_CLASS");
             intent.setComponent(new ComponentName(file_package,file_className));
             Log.d("yangxin", "onClick: file_package = "+file_package+",file_className = "+file_className);
+        }else if (view.getId() == R.id.top_applications) {//我的应用
+            intent = new Intent(this,ApplicationActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         } else if (view.getId() == R.id.top_setting) {//设置
             intent = new Intent();
             String setting_package = Utils.readSystemProp("LAUNCHERFG_SETTING_PACKAGE");

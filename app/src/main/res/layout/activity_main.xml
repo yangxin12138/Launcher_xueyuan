@@ -21,6 +21,21 @@
         android:paddingStart="@dimen/main_paddingStart"
         android:paddingEnd="@dimen/main_paddingEnd">
         <TextView
+            android:id="@+id/top_applications"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="我的应用"
+            android:textSize="@dimen/file_textSize"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textColor="@color/text_color_selector"
+            android:gravity="bottom|center_horizontal"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintWidth_percent="0.12"/>
+        <TextView
             android:id="@+id/top_file"
             android:layout_width="0dp"
             android:layout_height="0dp"
@@ -31,7 +46,7 @@
             android:focusableInTouchMode="true"
             android:textColor="@color/text_color_selector"
             android:gravity="bottom|center_horizontal"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/top_applications"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintWidth_percent="0.12"/>
@@ -58,7 +73,7 @@
             app:layout_constraintEnd_toStartOf="@+id/tv_day"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintWidth_percent="0.3"/>
+            app:layout_constraintWidth_percent="0.18"/>
         <TextView
             android:id="@+id/tv_day"
             android:layout_width="0dp"
