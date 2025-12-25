@@ -122,8 +122,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             intent.setComponent(new ComponentName(file_package,file_className));
             Log.d("yangxin", "onClick: file_package = "+file_package+",file_className = "+file_className);
         }else if (view.getId() == R.id.top_applications) {//我的应用
-            intent = new Intent(this,ApplicationActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent = new Intent(MainActivity.this,ApplicationActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
         } else if (view.getId() == R.id.top_setting) {//设置
             intent = new Intent();
             String setting_package = Utils.readSystemProp("LAUNCHERFG_SETTING_PACKAGE");
