@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <!-- 去除对话框默认背景 -->
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <!-- 去除对话框标题栏（因为我们用了自定义标题） -->
+        <item name="windowNoTitle">true</item>
+        <!-- 对话框动画（可选） -->
+        <item name="android:windowAnimationStyle">@android:style/Animation.Dialog</item>
+    </style>
+</resources>

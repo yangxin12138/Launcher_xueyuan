@@ -3,14 +3,26 @@ package com.twd.launcherxueyuan;
 import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.twd.launcherxueyuan.utils.Utils;
@@ -33,7 +45,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView top_applications;
     private ImageView icon_youxue;
     private ImageView icon_ketang;
-
+    // 在MainActivity类中添加成员变量
+    private SharedPreferences sp;
+    private static final String PASSWORD_KEY = "password";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,12 +64,82 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         top_applications = findViewById(R.id.top_applications);
         icon_youxue = findViewById(R.id.im_youxue);
         icon_ketang = findViewById(R.id.im_ketang);
-
+        sp = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        setPassword("314159");
         top_file.setOnFocusChangeListener(this::onFocusChange);top_file.setOnClickListener(this::onClick);
         top_setting.setOnFocusChangeListener(this::onFocusChange);top_setting.setOnClickListener(this::onClick);
-        top_applications.setOnFocusChangeListener(this::onFocusChange);top_applications.setOnClickListener(this::onClick);
+        top_applications.setOnFocusChangeListener(this::onFocusChange);
+        top_applications.setOnClickListener(v -> checkPasswordAndOpenApplications());
         icon_youxue.setOnFocusChangeListener(this::onFocusChange);icon_youxue.setOnClickListener(this::onClick);
         icon_ketang.setOnFocusChangeListener(this::onFocusChange);icon_ketang.setOnClickListener(this::onClick);
+    }
+
+    private void checkPasswordAndOpenApplications(){
+        String savedPassword = sp.getString(PASSWORD_KEY,null);
+        if (savedPassword == null){
+            openApplicationActivity();
+        }else {
+            showPasswordDialog(savedPassword);
+        }
+    }
+
+    private void openApplicationActivity() {
+        Intent intent = new Intent(MainActivity.this, ApplicationActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        startActivity(intent);
+    }
+
+    private void showPasswordDialog(String savedPassword){
+        //创建对话框构建器
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.CustomDialogTheme);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_password_input, null);
+        builder.setView(dialogView);
+
+        EditText etPassword = dialogView.findViewById(R.id.et_password);
+        TextView btnConfirm = dialogView.findViewById(R.id.btn_confirm); // 自定义确定按钮
+        TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);   // 自定义取消按钮
+        // 4. 创建对话框并设置属性
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(true); // 允许返回键取消
+        dialog.setCanceledOnTouchOutside(false); // 不允许点击外部关闭
+
+        // 5. 绑定确定按钮点击事件
+        btnConfirm.setOnClickListener(v -> {
+            String inputPassword = etPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(inputPassword)) {
+                Toast.makeText(MainActivity.this, "请输入密码", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (inputPassword.equals(savedPassword)) {
+                // 密码正确，打开页面并关闭对话框
+                openApplicationActivity();
+                dialog.dismiss();
+            } else {
+                // 密码错误，提示并清空输入框
+                Toast.makeText(MainActivity.this, "密码错误，请重新输入", Toast.LENGTH_SHORT).show();
+                etPassword.setText(""); // 清空输入框
+            }
+        });
+
+        // 6. 绑定取消按钮点击事件
+        btnCancel.setOnClickListener(v -> dialog.dismiss()); // 关闭对话框
+
+        // 7. 显示对话框并调整样式
+        dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.gravity = Gravity.CENTER;
+            window.setAttributes(params);
+            // 去除Dialog默认背景，显示自定义浅蓝色背景
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
+    }
+
+    private void setPassword(String password) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString(PASSWORD_KEY, password);
+        editor.apply();
     }
     private Runnable updateTimeRunnable = new Runnable() {
         @Override
