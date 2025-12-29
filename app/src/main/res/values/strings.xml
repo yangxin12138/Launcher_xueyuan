@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">LauncherYX</string>
     <string name="application_title">Application</string>
+    <string name="application_add_password">添加密码</string>
+    <string name="application_ignore_password">忽略密码</string>
+    <string name="dialog_add_title">添加应用锁密码</string>
+    <string name="dialog_delete_title">验证密码移除应用锁</string>
 </resources>

@@ -8,15 +8,35 @@
     tools:context=".ApplicationActivity"
     android:background="@drawable/background"
     android:orientation="vertical">
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/application_title"
-        android:textSize="@dimen/application_title_textsize"
-        android:textColor="@color/white"
-        android:paddingStart="@dimen/application_list_title_paddingStart"
-        android:paddingTop="@dimen/application_title_padding"
-        android:paddingBottom="@dimen/application_title_padding"/>
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/application_title"
+            android:textSize="@dimen/application_title_textsize"
+            android:textColor="@color/white"
+            android:paddingStart="@dimen/application_list_title_paddingStart"
+            android:paddingTop="@dimen/application_title_padding"
+            android:paddingBottom="@dimen/application_title_padding"/>
+
+        <!-- 密码管理按钮 -->
+        <TextView
+            android:id="@+id/tv_passwordManager"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="添加密码"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:layout_marginStart="50dp"
+            android:background="@drawable/btn_primary"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:layout_marginEnd="@dimen/application_list_title_paddingStart"/>
+    </LinearLayout>
     <GridView
         android:id="@+id/gridView"
         android:layout_width="match_parent"

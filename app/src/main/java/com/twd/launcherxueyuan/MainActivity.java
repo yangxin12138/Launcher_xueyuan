@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TextView top_applications;
     private ImageView icon_youxue;
     private ImageView icon_ketang;
-    // 在MainActivity类中添加成员变量
+
     private SharedPreferences sp;
     private static final String PASSWORD_KEY = "password";
     @Override
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         top_applications = findViewById(R.id.top_applications);
         icon_youxue = findViewById(R.id.im_youxue);
         icon_ketang = findViewById(R.id.im_ketang);
+
         sp = getSharedPreferences("app_prefs", MODE_PRIVATE);
-        setPassword("314159");
         top_file.setOnFocusChangeListener(this::onFocusChange);top_file.setOnClickListener(this::onClick);
         top_setting.setOnFocusChangeListener(this::onFocusChange);top_setting.setOnClickListener(this::onClick);
         top_applications.setOnFocusChangeListener(this::onFocusChange);
@@ -76,10 +76,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void checkPasswordAndOpenApplications(){
         String savedPassword = sp.getString(PASSWORD_KEY,null);
-        if (savedPassword == null){
-            openApplicationActivity();
-        }else {
+        if (savedPassword != null) {
             showPasswordDialog(savedPassword);
+        } else {
+            openApplicationActivity();
         }
     }
 
@@ -136,11 +136,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void setPassword(String password) {
-        SharedPreferences.Editor editor = sp.edit();
-        editor.putString(PASSWORD_KEY, password);
-        editor.apply();
-    }
     private Runnable updateTimeRunnable = new Runnable() {
         @Override
         public void run() {

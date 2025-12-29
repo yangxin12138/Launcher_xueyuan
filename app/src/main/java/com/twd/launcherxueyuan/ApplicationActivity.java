@@ -5,13 +5,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
@@ -27,20 +38,34 @@ public class ApplicationActivity extends AppCompatActivity {
     SharedPreferences sharedPreferences;
     int MyPosition ;
     Context context;
+    TextView tv_password; // 密码管理按钮
+    private static final String PASSWORD_KEY = "password";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_application);
         context =  this;
         initView();
+        // 初始化密码管理按钮状态
+        updatePasswordButtonText();
+        gridView.requestFocus();
+        gridView.setSelection(0);
     }
     @Override
     protected void onResume() {
         super.onResume();
         initView();
+        updatePasswordButtonText(); // 恢复页面时更新按钮状态
+        gridView.requestFocus();
+        gridView.setSelection(0);
     }
     private void initView(){
         gridView = findViewById(R.id.gridView);
+        tv_password = findViewById(R.id.tv_passwordManager);
+
+        sharedPreferences = getSharedPreferences("app_prefs", MODE_PRIVATE);
+        tv_password.setOnClickListener(v -> handlePasswordManagerClick());
         PackageManager pm = getPackageManager();
         Intent intentLauncher = new Intent(Intent.ACTION_MAIN,null);
         intentLauncher.addCategory(Intent.CATEGORY_LAUNCHER);
@@ -118,5 +143,93 @@ public class ApplicationActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //更新密码管理按钮的文字（添加密码/忽略密码）
+    private void updatePasswordButtonText(){
+        String savedPassword = sharedPreferences.getString(PASSWORD_KEY,null);
+        if (savedPassword == null){
+            tv_password.setText(getString(R.string.application_add_password));
+        }else {
+            tv_password.setText(getString(R.string.application_ignore_password));
+        }
+    }
+
+    //处理密码管理按钮点击事件
+    private void handlePasswordManagerClick(){
+        String savedPassword = sharedPreferences.getString(PASSWORD_KEY,null);
+        if (savedPassword == null){
+            //无密码：显示添加密码
+            showPasswordDialog(true);
+        }else {
+            // 有密码：显示移除密码弹窗
+            showPasswordDialog(false);
+        }
+    }
+    /**
+     * 通用密码弹窗
+     * @param isAddMode true=添加密码，false=移除密码
+     */
+    private void showPasswordDialog(boolean isAddMode){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this,R.style.CustomDialogTheme);
+        View dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_password_input,null);
+        builder.setView(dialogView);
+
+        //自定义弹窗标题(根据模式切换)
+        TextView tvTitle = dialogView.findViewById(R.id.tv_dialog_title);
+        if (isAddMode){
+            tvTitle.setText(getString(R.string.dialog_add_title));
+        }else {
+            tvTitle.setText(getString(R.string.dialog_delete_title));
+        }
+
+        EditText etPassword = dialogView.findViewById(R.id.et_password);
+        TextView btnConfirm = dialogView.findViewById(R.id.btn_confirm);
+        TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);
+
+        AlertDialog dialog = builder.create();
+        dialog.setCancelable(true);
+        dialog.setCanceledOnTouchOutside(false);
+
+        btnConfirm.setOnClickListener(v ->{
+            String inputPassword = etPassword.getText().toString().trim();
+            if (TextUtils.isEmpty(inputPassword)){
+                Toast.makeText(this, "请输入密码", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (isAddMode){
+                //保存密码
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(PASSWORD_KEY,inputPassword);
+                editor.apply();
+                Toast.makeText(this, "密码设置成功", Toast.LENGTH_SHORT).show();
+            }else {
+                //移除密码逻辑:验证原密码
+                String savedPassword = sharedPreferences.getString(PASSWORD_KEY,"");
+                if (!inputPassword.equals(savedPassword)){
+                    Toast.makeText(this, "密码错误", Toast.LENGTH_SHORT).show();
+                    etPassword.setText("");
+                    return;
+                }
+                //删除密码
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.remove(PASSWORD_KEY);
+                editor.apply();
+                Toast.makeText(this, "密码已移除", Toast.LENGTH_SHORT).show();
+            }
+            //更新按钮文字并关闭弹窗
+            updatePasswordButtonText();
+            dialog.dismiss();
+        });
+
+        btnCancel.setOnClickListener( v -> dialog.dismiss());
+        dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams params = window.getAttributes();
+            params.gravity = Gravity.CENTER;
+            window.setAttributes(params);
+            window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        }
     }
 }
